@@ -6,7 +6,7 @@ def clean_rows_tenure_above_age(df):
     df = df.drop(rows_to_drop)
     return df
 
-def get_cleaned_vanguard_data():
+def get_cleaned_vanguard_data(aware_of_time = False):
     # Reading the Data files
     url = "https://raw.githubusercontent.com/data-bootcamp-v4/lessons/main/5_6_eda_inf_stats_tableau/project/files_for_project/df_final_demo.txt"
     df_final_Demo = pd.read_csv(url, on_bad_lines='skip')
@@ -62,7 +62,10 @@ def get_cleaned_vanguard_data():
     df_final_merged = df_final_merged.merge(df_final_experiment_clients, on='client_id', how='inner')
     df_final_merged = clean_rows_tenure_above_age(df_final_merged)
 
-    return create_time_aware_behavior_report(df_final_merged)
+    if(aware_of_time):
+        return create_time_aware_behavior_report(df_final_merged)
+    else:
+        return df_final_merged
 
 def create_time_aware_behavior_report(df):
     
